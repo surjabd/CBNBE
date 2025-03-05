@@ -41,6 +41,11 @@ class Course extends Model {
           type:Sequelize.BOOLEAN,
           allowNull:false
         },
+        published: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+          allowNull: false
+        },
       },
       {
         sequelize,
@@ -54,6 +59,7 @@ class Course extends Model {
     this.belongsTo(models.User);
     this.hasMany(models.Section, { foreignKey: 'courseId' });
     this.hasMany(models.Coupon, { foreignKey: 'courseId' });
+    this.hasMany(models.PurchaseHistory, { foreignKey: 'courseId' });
   }
   
 }
