@@ -1,5 +1,7 @@
 import * as Yup from "yup";
 import User from "../models/User";
+import Course from "../models/Course";
+import PurchaseHistory from "../models/PurchaseHistory";
 import {
   BadRequestError,
   UnauthorizedError,
@@ -51,7 +53,7 @@ let userController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(id,{ include: [PurchaseHistory,Course] });
 
       if (!user) throw new BadRequestError();
 
