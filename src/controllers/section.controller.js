@@ -1,12 +1,11 @@
 import * as Yup from "yup";
-import section from "../models/Section";
 import { BadRequestError, ValidationError } from "../utils/ApiError";
 import Section from "../models/Section";
 
 let sectionController = {
   get: async (req, res, next) => {
     try {
-      const section = await Course.findAll();
+      const section = await Section.findAll();
 
       return res.status(200).json(section);
     } catch (error) {
@@ -15,7 +14,7 @@ let sectionController = {
   },
   add: async (req, res, next) => {
     try {
-      const section = await Course.create(req.body);
+      const section = await Section.create(req.body);
       return res.status(200).json(section);
     } catch (error) {
       next(error);
@@ -25,7 +24,7 @@ let sectionController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const section = await Course.findByPk(id);
+      const section = await Section.findByPk(id);
 
       if (!section) throw new BadRequestError();
 

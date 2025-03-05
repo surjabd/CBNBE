@@ -32,10 +32,19 @@ class Section extends Model {
       {
         sequelize,
         timestamps: true,
+        tableName: 'Sections'
       }
     );
 
     return this;
+  }
+
+  static getDummyPostRequestBody() {
+    return {
+      courseId: "sample-course-id",
+      title: "Sample Section Title",
+      order: 1
+    };
   }
 
   static associate(models) {

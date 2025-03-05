@@ -2,6 +2,6 @@ import { Router } from "express";
 import contentController from "../controllers/content.controller";
 
 const courseRoutes = Router();
-courseRoutes.get("/course/:id", contentController.find);
-courseRoutes.post("/course",contentController.add);
+courseRoutes.get("/content/:id", contentController.find);
+courseRoutes.post("/content",contentController.add);
 export { courseRoutes };

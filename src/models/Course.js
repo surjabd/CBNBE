@@ -1,13 +1,13 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize, { Model, DataTypes } from "sequelize";
 
 class Course extends Model {
   static init(sequelize) {
     super.init(
       {
         id:{
-          type: Sequelize.BIGINT,
-          allowNull: false,
-          primaryKey:true
+          type: DataTypes.UUID,
+          defaultValue: Sequelize.UUIDV4,
+          primaryKey: true,
         },
         title:{
           type:Sequelize.STRING,
@@ -45,13 +45,28 @@ class Course extends Model {
       {
         sequelize,
         timestamps: true,
+        tableName: 'Courses'
       }
     );
 
     return this;
   }
+
+  static getDummyPostRequestBody() {
+    return {
+      title: "Sample Course Title",
+      author: "Sample Author",
+      description: "This is a sample course description.",
+      curricullum: "AS-Levels",
+      subject: "Mathematics",
+      status: "Active",
+      price: 99.99,
+      acceptCoupon: true
+    };
+  }
+
   static associate(models) {
-    this.belongsTo(models.User);
+    this.belongsTo(models.User,{foreignKey:'author'});
     this.hasMany(models.Section, { foreignKey: 'courseId' });
   }
   

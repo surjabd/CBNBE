@@ -14,6 +14,7 @@ let contentController = {
   },
   add: async (req, res, next) => {
     try {
+      console.log(req.body);
       const course = await Content.create(req.body);
       return res.status(200).json(course);
     } catch (error) {

@@ -1,5 +1,5 @@
 import Sequelize, { Model,DataTypes } from "sequelize";
-import Section from "./Section";
+import Sections from "./Section";
 
 class Content extends Model {
   static init(sequelize) {
@@ -13,7 +13,7 @@ class Content extends Model {
         sectionId: {
           type: DataTypes.UUID,
           // references: {
-          //     model: Section,
+          //     model: Sections,
           //     key: 'id'
           // },
           // onDelete: 'CASCADE'
@@ -22,7 +22,7 @@ class Content extends Model {
           type: DataTypes.ENUM('video', 'text', 'quiz'),
           allowNull: false,
       },
-        contentData: {
+        contentLink: {
           type: DataTypes.TEXT,
           allowNull: false,
       },
@@ -41,12 +41,23 @@ class Content extends Model {
       {
         sequelize,
         timestamps: true,
-        tableName: "Content"
+        tableName: "Contents"
       }
     );
 
     return this;
   }
+
+  static getDummyPostRequestBody() {
+    return {
+      sectionId: "sample-section-id",
+      type: "video",
+      contentLink: "http://example.com/sample-video",
+      duration: 10,
+      order: 1
+    };
+  }
+
   static associate(models) {
         this.belongsTo(models.Section, { foreignKey: 'sectionId' });
   }
