@@ -45,28 +45,13 @@ class Course extends Model {
       {
         sequelize,
         timestamps: true,
-        tableName: 'Courses'
       }
     );
 
     return this;
   }
-
-  static getDummyPostRequestBody() {
-    return {
-      title: "Sample Course Title",
-      author: "Sample Author",
-      description: "This is a sample course description.",
-      curricullum: "AS-Levels",
-      subject: "Mathematics",
-      status: "Active",
-      price: 99.99,
-      acceptCoupon: true
-    };
-  }
-
   static associate(models) {
-    this.belongsTo(models.User,{foreignKey:'author'});
+    this.belongsTo(models.User);
     this.hasMany(models.Section, { foreignKey: 'courseId' });
   }
   

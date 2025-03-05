@@ -27,6 +27,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      registeredCourses: {
+        type: Sequelize.JSON,
+        allowNull: true,
+        defaultValue: []
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

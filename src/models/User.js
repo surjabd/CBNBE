@@ -15,6 +15,11 @@ class User extends Model {
         phone: Sequelize.STRING,
         password: Sequelize.VIRTUAL, //When it is VIRTUAL it does not exist in the database
         password_hash: Sequelize.STRING,
+        registeredCourses: {
+          type: Sequelize.JSON,
+          allowNull: true,
+          defaultValue: []
+        },
       },
       {
         sequelize,
