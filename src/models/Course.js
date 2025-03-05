@@ -53,6 +53,7 @@ class Course extends Model {
   static associate(models) {
     this.belongsTo(models.User);
     this.hasMany(models.Section, { foreignKey: 'courseId' });
+    this.hasMany(models.Coupon, { foreignKey: 'courseId' });
   }
   
 }
