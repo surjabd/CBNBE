@@ -1,12 +1,11 @@
 import * as Yup from "yup";
 import Course from "../models/Course";
 import { BadRequestError, ValidationError } from "../utils/ApiError";
-
+import User from "../models/User";
 let courseController = {
   get: async (req, res, next) => {
     try {
-      const course = await Course.findAll();
-
+      const course = await Course.findAll({ include: User });
       return res.status(200).json(course);
     } catch (error) {
       next(error);
@@ -25,7 +24,7 @@ let courseController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const course = await Course.findByPk(id);
+      const course = await Course.findByPk(id,{ include: { all: true, nested: true } });
 
       if (!course) throw new BadRequestError();
 

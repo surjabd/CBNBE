@@ -24,7 +24,7 @@ let sectionController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const section = await Section.findByPk(id);
+      const section = await Section.findByPk(id,{ include: { all: true, nested: true } });
 
       if (!section) throw new BadRequestError();
 

@@ -25,7 +25,7 @@ let contentController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const course = await Content.findByPk(id);
+      const course = await Content.findByPk(id,{ include: { all: true, nested: true } });
 
       if (!course) throw new BadRequestError();
 
