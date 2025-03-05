@@ -15,6 +15,7 @@ let userController = {
         name: Yup.string().required(),
         email: Yup.string().email().required(),
         password: Yup.string().required().min(6),
+        role: Yup.string().oneOf(['Teacher', 'Student']).required(),
       });
 
       if (!(await schema.isValid(req.body))) throw new ValidationError();

@@ -27,6 +27,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      role: {
+        type: Sequelize.ENUM,
+        values: ['Teacher', 'Student'],
+        allowNull: false,
+      },
       registeredCourses: {
         type: Sequelize.JSON,
         allowNull: true,

@@ -20,6 +20,11 @@ class User extends Model {
           allowNull: true,
           defaultValue: []
         },
+        role: {
+          type: Sequelize.ENUM,
+          values: ['Teacher', 'Student'],
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -44,6 +49,17 @@ class User extends Model {
     this.hasMany(models.Course, {
       foreignKey: "author",
     });
+    this.hasMany(models.PurchaseHistory, {
+      foreignKey: "userId",
+    });
+  }
+
+  addPurchasedCourse(courseId) {
+    if (!this.registeredCourses.includes(courseId)) {
+      this.registeredCourses.push(courseId);
+      return this.save();
+    }
+    return Promise.resolve(this);
   }
 
   checkPassword(password) {
