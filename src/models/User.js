@@ -5,8 +5,14 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
+        id:{
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
+          primaryKey: true,
+        },
         name: Sequelize.STRING,
         email: Sequelize.STRING,
+        phone: Sequelize.STRING,
         password: Sequelize.VIRTUAL, //When it is VIRTUAL it does not exist in the database
         password_hash: Sequelize.STRING,
       },
@@ -30,9 +36,8 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.Address, {
-      through: "UserAddress",
-      foreignKey: "userId",
+    this.hasMany(models.Course, {
+      foreignKey: "author",
     });
   }
 

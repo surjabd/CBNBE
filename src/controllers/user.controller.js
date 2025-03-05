@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import Address from "../models/Address";
 import User from "../models/User";
 import {
   BadRequestError,
@@ -36,36 +35,7 @@ let userController = {
     }
   },
 
-  addAddress: async (req, res, next) => {
-    try {
-      const { body, userId } = req;
-
-      const schema = Yup.object().shape({
-        city: Yup.string().required(),
-        state: Yup.string().required(),
-        neighborhood: Yup.string().required(),
-        country: Yup.string().required(),
-      });
-
-      if (!(await schema.isValid(body.address))) throw new ValidationError();
-
-      const user = await User.findByPk(userId);
-
-      let address = await Address.findOne({
-        where: { ...body.address },
-      });
-
-      if (!address) {
-        address = await Address.create(body.address);
-      }
-
-      await user.addAddress(address);
-
-      return res.status(200).json(user);
-    } catch (error) {
-      next(error);
-    }
-  },
+  
 
   get: async (req, res, next) => {
     try {

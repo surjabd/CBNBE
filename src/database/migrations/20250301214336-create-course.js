@@ -14,8 +14,13 @@ module.exports = {
         allowNull: false
       },
       author: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       description: {
         type: Sequelize.STRING,
