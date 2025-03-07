@@ -1,6 +1,7 @@
 import express from "express";
 import fs from "fs";
 import bodyParser from "body-parser";
+import cors from "cors";
 import globalErrorHandler from "../middlewares/errorHandler.middleware";
 /*
   body-parser: Parse incoming request bodies in a middleware before your handlers, 
@@ -27,6 +28,14 @@ const expressService = {
       }
 
       server = express();
+      // Enable CORS with proper configuration
+      server.use(
+        cors({
+          origin: "*", // Change this to allow specific origins
+          methods: ["GET", "POST", "PUT", "DELETE"],
+          allowedHeaders: ["Content-Type", "Authorization"],
+        })
+      );
       server.use(bodyParser.json());
       server.use(routes);
       server.use(globalErrorHandler);

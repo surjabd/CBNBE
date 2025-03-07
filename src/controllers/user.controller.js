@@ -17,10 +17,17 @@ let userController = {
         name: Yup.string().required(),
         email: Yup.string().email().required(),
         password: Yup.string().required().min(6),
-        role: Yup.string().oneOf(['Teacher', 'Student']).required(),
+        role: Yup.string().oneOf(["Teacher", "Student"]).required(),
+        phone: Yup.string().nullable(), // make phone optional
       });
 
-      if (!(await schema.isValid(req.body))) throw new ValidationError();
+      if (!(await schema.isValid(req.body))) {
+        const validationErrors = await schema
+          .validate(req.body, { abortEarly: false })
+          .catch((err) => err.errors);
+        console.log("Validation Errors:", validationErrors);
+        throw new ValidationError(validationErrors);
+      }
 
       const { email } = req.body;
 
@@ -38,8 +45,6 @@ let userController = {
     }
   },
 
-  
-
   get: async (req, res, next) => {
     try {
       const users = await User.findAll();
@@ -53,7 +58,9 @@ let userController = {
   find: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await User.findByPk(id,{ include: [PurchaseHistory,Course] });
+      const user = await User.findByPk(id, {
+        include: [PurchaseHistory, Course],
+      });
 
       if (!user) throw new BadRequestError();
 

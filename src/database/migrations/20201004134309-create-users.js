@@ -7,7 +7,7 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
       },
       name: {
         allowNull: false,
@@ -19,8 +19,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
       phone: {
-        allowNull: false,
-        unique: true,
+        allowNull: true,
+        // unique: true,
         type: Sequelize.STRING,
       },
       password_hash: {
@@ -29,13 +29,13 @@ module.exports = {
       },
       role: {
         type: Sequelize.ENUM,
-        values: ['Teacher', 'Student'],
+        values: ["Teacher", "Student"],
         allowNull: false,
       },
       registeredCourses: {
         type: Sequelize.JSON,
         allowNull: true,
-        defaultValue: []
+        defaultValue: [],
       },
       createdAt: {
         allowNull: false,
