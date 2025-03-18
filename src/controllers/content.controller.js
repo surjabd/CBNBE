@@ -34,6 +34,20 @@ let contentController = {
       next(error);
     }
   },
+  update: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const course = await Content.findByPk(id);
+      if (!course) throw new BadRequestError();
+      else{
+        course.update(req.body);
+        return res.status(200).json(course);  
+      }   
+    } catch (error) {
+      next(error);
+    }
+  }
+  , 
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;

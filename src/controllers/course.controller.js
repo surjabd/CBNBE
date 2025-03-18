@@ -5,6 +5,8 @@ import User from "../models/User";
 import Coupon from "../models/Coupon";
 import { v4 as uuidv4 } from 'uuid';
 import PurchaseHistory from "../models/PurchaseHistory";
+import Content from "../models/Content";
+import Section from "../models/Section";
 
 let courseController = {
   get: async (req, res, next) => {
@@ -37,12 +39,32 @@ let courseController = {
       next(error);
     }
   },
+  update: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const course = await Course.findByPk(id);
+      if (!course) throw new BadRequestError();
+      else{
+        course.update(req.body);
+        return res.status(200).json(course);  
+      }   
+    } catch (error) {
+      next(error);
+    }
+  },
+
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;
       const course = await Course.findByPk(id);
       if (!course) throw new BadRequestError();
-
+      Section.findAll({ where: { courseId: id } }).then((sections) => { 
+        sections.map((section) => {
+          Content.destroy({ where: { sectionId: section.id } });
+          section.destroy();
+        });
+      }
+      );
       course.destroy();
 
       return res.status(200).json({ msg: "Deleted" });
