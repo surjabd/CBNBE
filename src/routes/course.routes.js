@@ -6,6 +6,7 @@ courseRoutes.get("/course", courseController.get);
 courseRoutes.get("/course/:id", courseController.find);
 courseRoutes.post("/course",courseController.add);
 courseRoutes.post("/registerToCourse",courseController.registerToCourse);
+courseRoutes.put("/course/:id",courseController.update);
 courseRoutes.delete("/course/:id",courseController.delete);
 courseRoutes.put("/unregisterToCourse",courseController.unregisterToCourse);
 courseRoutes.post("/generateCoupon",courseController.generateCoupon);
