@@ -1,6 +1,7 @@
-import * as Yup from "yup";
 import Content from "../models/Content";
 import { BadRequestError, ValidationError } from "../utils/ApiError";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+const fs = require('fs');
 
 let contentController = {
   get: async (req, res, next) => {
@@ -60,6 +61,37 @@ let contentController = {
     } catch (error) {
       next(error);
     }
+  },
+  uploadtoS3: async (req, res, next) => {
+    const fileContent = fs.readFileSync(req.file.path);
+    const s3Client = new S3Client({
+      region: process.env.AWS_REGION,
+      credentials: {
+        accessKeyId: process.env.AWS_KEYID,
+        secretAccessKey: process.env.AWS_SECRETKEY,
+      },
+    });
+    const key = req.file.originalname.replace(/\s+/g, '-').toLowerCase();
+    const uploadParams = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: key,
+      Body: fileContent,
+      ContentLength: req.file.size,
+      ACL: 'public-read'
+    };
+    
+    try {
+      const command = new PutObjectCommand(uploadParams);
+      const data = await s3Client.send(command);
+     
+      const fileUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+      console.log("Success", fileUrl);
+      return res.status(200).json({ s3Url: fileUrl });
+    } catch (err) {
+      console.log("Error", err);
+      return res.status(500).json({ msg: "Error uploading file" });
+    }
+    
   }
 }
 

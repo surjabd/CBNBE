@@ -9,6 +9,10 @@ module.exports = {
         allowNull: false,
         primaryKey: true
       },
+      name: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
       sectionId: {
         type: Sequelize.UUID,
         allowNull: false,

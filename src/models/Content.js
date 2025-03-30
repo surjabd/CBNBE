@@ -18,6 +18,10 @@ class Content extends Model {
           // },
           // onDelete: 'CASCADE'
       },
+      name: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
         type: {
           type: DataTypes.ENUM('video', 'text', 'quiz'),
           allowNull: false,
