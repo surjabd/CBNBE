@@ -15,13 +15,14 @@ let userController = {
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required(),
+        phone: Yup.string().required(),
         email: Yup.string().email().required(),
         password: Yup.string().required().min(6),
         role: Yup.string().oneOf(['Teacher', 'Student']).required(),
       });
 
       if (!(await schema.isValid(req.body))) throw new ValidationError();
-
+      console.log
       const { email } = req.body;
 
       const userExists = await User.findOne({
