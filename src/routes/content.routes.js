@@ -1,7 +1,7 @@
 import { Router } from "express";
 import contentController from "../controllers/content.controller";
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'temp_uploads/' })
 const contentRoutes = Router();
 contentRoutes.get("/content/:id", contentController.find);
 contentRoutes.post("/content",contentController.add);
