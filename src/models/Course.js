@@ -22,7 +22,7 @@ class Course extends Model {
           allowNull:false
         },
         curricullum:{
-          type:Sequelize.ENUM('0-Levels','AS-Levels','A2-Levels','IGCSE'),
+          type:Sequelize.ENUM('Cambridge O-level GCE','Cambridge O-level IGCSE','Cambridge AS-level','Cambridge A-level'),
           allowNull:false
         },
         subject:{
